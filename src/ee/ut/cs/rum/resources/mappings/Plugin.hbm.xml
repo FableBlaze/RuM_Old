@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="mappings">
+    <class name="ee.ut.math.rum.resources.mappings.Plugin" table="Plugin">
+        <id name="id" column="plugin_id" type="long">
+            <generator class="native"/>                     
+        </id>
+        <property name="name" column="name" type="string"/>
+        <property name="totalUses" column="total_uses" type="string"/>
+        <property name="lastUsed" column="last_used" type="string"/>
+        <property name="accountsUsed" column="accounts_used" type="string"/>
+        <property name="statusId" column="status_id" type="string"/>
+        <property name="typeId" column="type_id" type="string"/>
+        <property name="uploaded" column="uploaded" type="string"/>
+        <property name="uploaderId" column="uploader_id" type="string"/>
+        <property name="diabled" column="diabled" type="string"/>
+        <property name="disablerId" column="disabler_id" type="string"/>
+        <property name="created" column="created" type="string"/>
+        <property name="creator" column="creator" type="string"/>
+        <property name="version" column="version" type="string"/>
+        <property name="shortDescription" column="short_description" type="string"/>
+        <property name="longDescription" column="long_description" type="string"/>
+        <property name="parameters" column="parameters" type="string"/>
+        <property name="inputTypeId" column="input_type_id" type="string"/>
+        <property name="outputTypeId" column="output_type_id" type="string"/>
+        <property name="location" column="location" type="string"/>     
+    </class>
+</hibernate-mapping>
