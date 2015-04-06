@@ -3,7 +3,9 @@ RuM - Rule Mining platform
 
 Currently in early development.
 
+
 Main goals of the platform:
+
 1. Web-based alternative to current popular process mining tools – No such platform exists based on our current knowledge.
 2. RuM does not include process mining capabilities – Instead it will act as a “back-bone” for the mining process.
 3. Process mining will be done by plugins – All parts of the process mining workflow will be implemented as plugins with each plugin handling a specific part of the workflow.
