@@ -12,4 +12,4 @@ Main goals of the platform:
 4. User can select the plugins for each mining task – Ideally every algorithm would be usable with any input, output and visualization plugin.
 5. Access to plugins can be modified based on users or groups – In some cases it may be needed to allow users to access only specific plugins, especially if a high number of or some experimental plugins are installed.
 6. Process mining is performed server-side on a “fire-and-forget” principle – The user may close the session after the mining task has been successfully started. RuM will carry out the task on its own. User can check the task during the next session.
-7. Data is handled on a “per-account” basis – All data on RuM will be owned some user account. 
+7. Data is handled on a “per-account” basis – All data on RuM will be owned by some user account. 
