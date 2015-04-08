@@ -2,9 +2,6 @@ package ee.ut.cs.rum;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -13,8 +10,6 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
 import ee.ut.cs.rum.mainpage.SideBar;
-import ee.ut.cs.rum.utilities.HibernateUtil;
-import ee.ut.cs.rum.utilities.pojos.Account;
 
 @SuppressWarnings("serial")
 @Theme("rum")
@@ -34,21 +29,6 @@ public class RumUI extends UI {
 	
 	@Override
 	protected void init(VaadinRequest request) {
-		
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//		session.beginTransaction();
-//        Account a1 = new Account("Name", "Email", "Password", "Role");
-//        long accountId = (Long) session.save(a1);
-//        session.getTransaction().commit();
-//       
-//        Account account1 = (Account) session.get(Account.class, new Long("1"));       
-//        System.out.println(account1);
-//               
-//        session.close();
-		
-		
-		
 		mainLayout = new MainLayout();
 		rumNavigator = new RumNavigator(this, mainLayout.getContent());
 		mainLayout.initHeader();

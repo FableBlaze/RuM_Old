@@ -1,5 +1,8 @@
 package ee.ut.cs.rum.frontpage;
 
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
@@ -14,7 +17,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 
 import ee.ut.cs.rum.RumUI;
-import ee.ut.cs.rum.utilities.pojos.Account;
 
 @SuppressWarnings("serial")
 public class CreateAccount extends Panel implements View {
@@ -41,32 +43,39 @@ public class CreateAccount extends Panel implements View {
 		layout.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
 		
 		accName = new TextField("Account name");
-		accName.setRequired(true);
 		accName.setImmediate(true);
-		accName.setRequiredError("Account name must be filled in!");
+		accName.setRequired(true);
+		accName.setValidationVisible(false);
+		accName.addValidator(new StringLengthValidator("Account name must contain at least 4 characters", 4, null, false));
 		layout.addComponent(accName, 0, 1);
 		layout.setComponentAlignment(accName, Alignment.MIDDLE_CENTER);
 		
 		accEmail = new TextField("Account email");
-		accEmail.setRequired(true);
 		accEmail.setImmediate(true);
-		accEmail.setRequiredError("Account email must be filled in!");
+		accEmail.setRequired(true);
+		accEmail.setValidationVisible(false);
+		accEmail.setRequiredError("Account email is required");
+		accEmail.addValidator(new EmailValidator("Invalid e-mail adress!"));
 		layout.addComponent(accEmail, 0, 2);
 		layout.setComponentAlignment(accEmail, Alignment.MIDDLE_CENTER);
 		
 		accPassword = new PasswordField("Account password");
-		accPassword.setRequired(true);
 		accPassword.setImmediate(true);
-		accPassword.setRequiredError("Account password must be filled in!");
+		accPassword.setRequired(true);
+		accPassword.setValidationVisible(false);
+		accPassword.addValidator(new StringLengthValidator("Account password must contain at least 4 characters", 4, null, false));
 		layout.addComponent(accPassword, 0, 3);
 		layout.setComponentAlignment(accPassword, Alignment.MIDDLE_CENTER);
 		
 		rePassword = new PasswordField("Re-enter password");
-		rePassword.setRequired(true);
 		rePassword.setImmediate(true);
-		rePassword.setRequiredError("Account password must be filled in!");
+		rePassword.setRequired(true);
+		rePassword.setValidationVisible(false);
 		layout.addComponent(rePassword, 0, 4);
 		layout.setComponentAlignment(rePassword, Alignment.MIDDLE_CENTER);
+		
+		accPassword.addValidator(new RePasswordValidator("Passwords must match", accPassword, rePassword));
+		rePassword.addValidator(new RePasswordValidator("Passwords must match", accPassword, rePassword));
 		
 		Button newAccButton = createNewAccButton();
 		layout.addComponent(newAccButton, 0, 5);
@@ -88,9 +97,13 @@ public class CreateAccount extends Panel implements View {
 		    		if (accountDao.createAccount(accName.getValue(), accEmail.getValue(), accPassword.getValue())) {
 		    			Notification.show("Account created!",  Notification.Type.HUMANIZED_MESSAGE);
 		    			accName.clear();
+		    			accName.setValidationVisible(false);
 		    			accEmail.clear();
+		    			accEmail.setValidationVisible(false);
 		    			accPassword.setValue("");
+		    			accPassword.setValidationVisible(false);
 		    			rePassword.setValue("");
+		    			rePassword.setValidationVisible(false);
 		    		}
 		    		
 				}
@@ -100,14 +113,19 @@ public class CreateAccount extends Panel implements View {
 	}
 	
 	private boolean validateFields() {
-		if (!accName.isValid() || !accEmail.isValid() || !accPassword.isValid() || !rePassword.isValid()) {
-			Notification.show("All fileds are required!", "Click to dismiss", Notification.Type.ERROR_MESSAGE);
-			return false;
-		} else if (!accPassword.getValue().equals(rePassword.getValue())) {
-			Notification.show("Passwords do not match!", "Click to dismiss",  Notification.Type.ERROR_MESSAGE);
-			return false;
-		} else {
+		try {
+			accName.validate();
+			accEmail.validate();
+			accPassword.validate();
+			rePassword.validate();
 			return true;
+		} catch (InvalidValueException e) {
+			accName.setValidationVisible(true);
+			accEmail.setValidationVisible(true);
+			accPassword.setValidationVisible(true);
+			rePassword.setValidationVisible(true);
+			Notification.show(e.getMessage(), "Click to dismiss", Notification.Type.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	

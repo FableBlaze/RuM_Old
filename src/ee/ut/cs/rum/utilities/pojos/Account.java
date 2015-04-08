@@ -17,7 +17,7 @@ public class Account {
     @GenericGenerator(name="increment", strategy = "increment")
 	private Long id;
 
-	@Column(name = "name")
+	@Column(name = "name", unique=true)
     private String name;
 	@Column(name = "email")
     private String email;
