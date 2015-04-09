@@ -15,7 +15,6 @@ public class AccountDaoFrontpage {
 	
 	public AccountDaoFrontpage() {
 		sessionFactory = HibernateUtil.getSessionFactory();
-		System.out.println("dao");
 	}
 	
 	public Boolean createAccount(String accName, String accEmail, String accPassword) {

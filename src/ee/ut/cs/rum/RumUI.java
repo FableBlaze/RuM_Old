@@ -2,6 +2,7 @@ package ee.ut.cs.rum;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -14,6 +15,7 @@ import ee.ut.cs.rum.mainpage.SideBar;
 @SuppressWarnings("serial")
 @Theme("rum")
 @Push
+@PreserveOnRefresh
 public class RumUI extends UI {
 
 	@WebServlet(value = {"/*", "/VAADIN/*"}, asyncSupported = true)
