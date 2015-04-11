@@ -21,8 +21,6 @@ import ee.ut.cs.rum.RumUI;
 @SuppressWarnings("serial")
 public class CreateAccount extends Panel implements View {
 	public static final String NAME = "createAccount";
-	
-	private AccountDaoFrontpage accountDao;
 
 	private RumUI currentUI; 
 	private Button enterButton;
@@ -33,7 +31,6 @@ public class CreateAccount extends Panel implements View {
 	private PasswordField rePassword;
 	
 	public CreateAccount() {
-		accountDao = new AccountDaoFrontpage();
 		currentUI = ((RumUI) UI.getCurrent());
 		
 		GridLayout layout = new GridLayout(1, 6);
@@ -94,18 +91,8 @@ public class CreateAccount extends Panel implements View {
 		button.addClickListener(new Button.ClickListener() {
 		    public void buttonClick(ClickEvent event) {
 		    	if (validateFields()) {
-		    		if (accountDao.createAccount(accName.getValue(), accEmail.getValue(), accPassword.getValue())) {
-		    			Notification.show("Account created!",  Notification.Type.HUMANIZED_MESSAGE);
-		    			accName.clear();
-		    			accName.setValidationVisible(false);
-		    			accEmail.clear();
-		    			accEmail.setValidationVisible(false);
-		    			accPassword.setValue("");
-		    			accPassword.setValidationVisible(false);
-		    			rePassword.setValue("");
-		    			rePassword.setValidationVisible(false);
-		    		}
-		    		
+		    		Notification.show("Account ALMOST created!",  Notification.Type.HUMANIZED_MESSAGE);
+		    		//TODO
 				}
 		    }
 		});
