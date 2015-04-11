@@ -40,39 +40,23 @@ public class CreateAccount extends Panel implements View {
 		layout.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
 		
 		accName = new TextField("Account name");
-		accName.setImmediate(true);
-		accName.setRequired(true);
-		accName.setValidationVisible(false);
-		accName.addValidator(new StringLengthValidator("Account name must contain at least 4 characters", 4, null, false));
 		layout.addComponent(accName, 0, 1);
 		layout.setComponentAlignment(accName, Alignment.MIDDLE_CENTER);
 		
 		accEmail = new TextField("Account email");
 		accEmail.setImmediate(true);
-		accEmail.setRequired(true);
-		accEmail.setValidationVisible(false);
-		accEmail.setRequiredError("Account email is required");
-		accEmail.addValidator(new EmailValidator("Invalid e-mail adress!"));
 		layout.addComponent(accEmail, 0, 2);
 		layout.setComponentAlignment(accEmail, Alignment.MIDDLE_CENTER);
 		
 		accPassword = new PasswordField("Account password");
 		accPassword.setImmediate(true);
-		accPassword.setRequired(true);
-		accPassword.setValidationVisible(false);
-		accPassword.addValidator(new StringLengthValidator("Account password must contain at least 4 characters", 4, null, false));
 		layout.addComponent(accPassword, 0, 3);
 		layout.setComponentAlignment(accPassword, Alignment.MIDDLE_CENTER);
 		
 		rePassword = new PasswordField("Re-enter password");
 		rePassword.setImmediate(true);
-		rePassword.setRequired(true);
-		rePassword.setValidationVisible(false);
 		layout.addComponent(rePassword, 0, 4);
 		layout.setComponentAlignment(rePassword, Alignment.MIDDLE_CENTER);
-		
-		accPassword.addValidator(new RePasswordValidator("Passwords must match", accPassword, rePassword));
-		rePassword.addValidator(new RePasswordValidator("Passwords must match", accPassword, rePassword));
 		
 		Button newAccButton = createNewAccButton();
 		layout.addComponent(newAccButton, 0, 5);
@@ -90,30 +74,11 @@ public class CreateAccount extends Panel implements View {
 		button.setImmediate(true);
 		button.addClickListener(new Button.ClickListener() {
 		    public void buttonClick(ClickEvent event) {
-		    	if (validateFields()) {
-		    		Notification.show("Account ALMOST created!",  Notification.Type.HUMANIZED_MESSAGE);
-		    		//TODO
-				}
+		    	Notification.show("Account ALMOST created!",  Notification.Type.HUMANIZED_MESSAGE);
+		    	//TODO
 		    }
 		});
 		return button;
-	}
-	
-	private boolean validateFields() {
-		try {
-			accName.validate();
-			accEmail.validate();
-			accPassword.validate();
-			rePassword.validate();
-			return true;
-		} catch (InvalidValueException e) {
-			accName.setValidationVisible(true);
-			accEmail.setValidationVisible(true);
-			accPassword.setValidationVisible(true);
-			rePassword.setValidationVisible(true);
-			Notification.show(e.getMessage(), "Click to dismiss", Notification.Type.ERROR_MESSAGE);
-			return false;
-		}
 	}
 	
 	private void createEnterButton(String label) {

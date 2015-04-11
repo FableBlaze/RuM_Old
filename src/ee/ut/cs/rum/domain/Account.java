@@ -1,4 +1,4 @@
-package ee.ut.cs.rum.utilities.pojos;
+package ee.ut.cs.rum.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
