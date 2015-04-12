@@ -63,7 +63,7 @@ public class SideBar extends Panel {
 		layout.addComponent(managementLabel, 0, 6);
 		layout.setComponentAlignment(managementLabel, Alignment.MIDDLE_LEFT);
 		
-		accountsButton = currentUI.getRumNavigator().getAccountsPanel().getEnterButton();
+		accountsButton = currentUI.getRumNavigator().getAccountsPanel().getSideBarEnterButton();
 		layout.addComponent(accountsButton, 0, 7);
 		layout.setComponentAlignment(accountsButton, Alignment.MIDDLE_LEFT);
 		

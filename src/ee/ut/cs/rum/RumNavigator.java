@@ -6,7 +6,7 @@ import com.vaadin.ui.SingleComponentContainer;
 import com.vaadin.ui.UI;
 
 import ee.ut.cs.rum.frontpage.About;
-import ee.ut.cs.rum.frontpage.CreateAccount;
+import ee.ut.cs.rum.frontpage.CreateAccountUser;
 import ee.ut.cs.rum.frontpage.Login;
 import ee.ut.cs.rum.frontpage.RecoverAccount;
 import ee.ut.cs.rum.mainpage.accounts.Accounts;
@@ -25,7 +25,7 @@ import ee.ut.cs.rum.mainpage.workspace.TasksUser;
 public class RumNavigator extends Navigator {
 
 	private About aboutPanel;
-	private CreateAccount createAccountPanel;
+	private CreateAccountUser createAccountPanel;
 	private Login loginPanel;
 	private RecoverAccount recoverAccountPanel;
 	
@@ -50,8 +50,8 @@ public class RumNavigator extends Navigator {
 		aboutPanel = new About();
 		this.addView(About.NAME, aboutPanel);
 		
-		createAccountPanel = new CreateAccount();
-		this.addView(CreateAccount.NAME, createAccountPanel);
+		createAccountPanel = new CreateAccountUser();
+		this.addView(CreateAccountUser.NAME, createAccountPanel);
 		
 		loginPanel = new Login();
 		this.addView(Login.NAME, loginPanel);
@@ -98,7 +98,7 @@ public class RumNavigator extends Navigator {
 			@Override
 			public boolean beforeViewChange(ViewChangeEvent event) {
 				String viewName = event.getViewName();
-				if (currentUI.getCurrentUser() == null && !(viewName == About.NAME || viewName == CreateAccount.NAME || viewName == Login.NAME || viewName == RecoverAccount.NAME)) {
+				if (currentUI.getCurrentUser() == null && !(viewName == About.NAME || viewName == CreateAccountUser.NAME || viewName == Login.NAME || viewName == RecoverAccount.NAME)) {
 					String fragmentAndParameters = viewName + "/" + event.getParameters();
 					getUI().getNavigator().getDisplay().showView(new Login("Please log in to access: " + fragmentAndParameters, fragmentAndParameters));
 					
@@ -125,7 +125,7 @@ public class RumNavigator extends Navigator {
 		return aboutPanel;
 	}
 	
-	public CreateAccount getCreateAccountPanel() {
+	public CreateAccountUser getCreateAccountPanel() {
 		return createAccountPanel;
 	}
 

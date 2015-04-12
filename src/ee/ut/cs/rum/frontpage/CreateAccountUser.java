@@ -21,8 +21,8 @@ import ee.ut.cs.rum.RumUI;
 import ee.ut.cs.rum.domain.Account;
 
 @SuppressWarnings("serial")
-public class CreateAccount extends Panel implements View {
-	public static final String NAME = "createAccount";
+public class CreateAccountUser extends Panel implements View {
+	public static final String NAME = "createAccountUser";
 
 	private BeanItem<Account> accountItem;
 	private FieldGroup binder;
@@ -35,7 +35,7 @@ public class CreateAccount extends Panel implements View {
 	private PasswordField accPassword;
 	private PasswordField rePassword;
 
-	public CreateAccount() {
+	public CreateAccountUser() {
 		accountItem = new BeanItem<Account>(new Account());
 		currentUI = ((RumUI) UI.getCurrent());
 
@@ -135,7 +135,7 @@ public class CreateAccount extends Panel implements View {
 		enterButton.setImmediate(true);
 		enterButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				currentUI.getRumNavigator().navigateTo(CreateAccount.NAME);
+				currentUI.getRumNavigator().navigateTo(CreateAccountUser.NAME);
 			}
 		});
 	}
