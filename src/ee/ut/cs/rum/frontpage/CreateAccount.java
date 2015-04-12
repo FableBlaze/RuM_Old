@@ -1,7 +1,5 @@
 package ee.ut.cs.rum.frontpage;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
@@ -26,7 +24,7 @@ import ee.ut.cs.rum.domain.Account;
 public class CreateAccount extends Panel implements View {
 	public static final String NAME = "createAccount";
 
-	private Item accountItem;
+	private BeanItem<Account> accountItem;
 	private FieldGroup binder;
 
 	private RumUI currentUI; 
@@ -112,7 +110,10 @@ public class CreateAccount extends Panel implements View {
 				rePassword.setValidationVisible(true);
 
 				try {
+					accountItem.getBean().setRole("ADMINISTRATOR");
 					binder.commit();
+					currentUI.getAccounts().addEntity(accountItem.getBean());
+					accountItem = new BeanItem<Account>(new Account());
 					accName.clear();
 					accEmail.clear();
 					accPassword.clear();
