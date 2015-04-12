@@ -10,6 +10,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.PostgreSQL9Dialect;
 import org.hibernate.service.ServiceRegistry;
 
+import com.vaadin.addon.jpacontainer.EntityItem;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.annotations.PreserveOnRefresh;
@@ -97,6 +98,10 @@ public class RumUI extends UI {
 
 	public JPAContainer<Account> getAccounts() {
 		return accounts;
+	}
+	
+	public EntityItem<Account> getAccount(String itemId) {
+		return accounts.getItem(Long.parseLong(itemId, 10));
 	}
 
 	public void setCurrentUser(Account currentUser) {

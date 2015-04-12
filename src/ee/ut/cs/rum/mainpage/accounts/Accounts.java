@@ -6,12 +6,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 
 import ee.ut.cs.rum.RumUI;
-import ee.ut.cs.rum.mainpage.SideBar;
 import ee.ut.cs.rum.mainpage.TabBar;
 
 @SuppressWarnings("serial")
@@ -118,21 +116,27 @@ public class Accounts extends GridLayout implements ComponentContainer, View {
 			tabBar.setCurrentlyPressed(addAccountButton);
 		} else if (parameters.startsWith(AccountDetails.NAME)) {
 			if (!tabBar.getCurrentTabs().contains(parameters)) {
-				currentContent = parameters;
-				AccountDetails accountDetails = new AccountDetails(event.getParameters());
-				Button enterButton = new Button(event.getParameters());
-				enterButton.setImmediate(true);
-				enterButton.addClickListener(new Button.ClickListener() {
-				    public void buttonClick(ClickEvent event) {
-				    	currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+parameters);
-				    	contentPanel.setContent(accountDetails);
-				    	tabBar.setCurrentlyPressed(enterButton);
-				    }
-				});
-				tabBar.addTab(enterButton, tabBarEnterButton, parameters);
-				currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+parameters);
-		    	contentPanel.setContent(accountDetails);
-		    	tabBar.setCurrentlyPressed(enterButton);
+				try {
+					currentContent = parameters;
+					AccountDetails accountDetails = new AccountDetails(event.getParameters());
+					Button enterButton = new Button(event.getParameters());
+					enterButton.setImmediate(true);
+					enterButton.addClickListener(new Button.ClickListener() {
+					    public void buttonClick(ClickEvent event) {
+					    	currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+parameters);
+					    	contentPanel.setContent(accountDetails);
+					    	tabBar.setCurrentlyPressed(enterButton);
+					    }
+					});
+					tabBar.addTab(enterButton, tabBarEnterButton, parameters);
+					currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+parameters);
+			    	contentPanel.setContent(accountDetails);
+			    	tabBar.setCurrentlyPressed(enterButton);
+				} catch (Exception e) {
+					System.out.println(e);
+					currentUI.getRumNavigator().navigateTo(Accounts.NAME);
+				}
+				
 			}
 		}
 	}

@@ -116,6 +116,10 @@ public class CreateAccountUser extends Panel implements View {
 					accountItem = new BeanItem<Account>(new Account());
 					binder.clear();
 					rePassword.clear();
+					binder = new FieldGroup(accountItem);
+					binder.bind(accName, "name");
+					binder.bind(accEmail, "email");
+					binder.bind(accPassword, "password");
 					accName.setValidationVisible(false);
 					accEmail.setValidationVisible(false);
 					accPassword.setValidationVisible(false);
