@@ -50,7 +50,7 @@ public class Accounts extends GridLayout implements ComponentContainer, View {
 	
 	private void createAccountsTabBar() {
 		tabBar = new TabBar();
-		tabBar.setCaption("Accounts");
+		tabBar.setCaption("Accounts sub-sections:");
 		tabBarEnterButton = createTabBarEnterButton("Accounts");
 		tabBar.addButton(tabBarEnterButton);
 		createAddAccountButton = createAddAccountButton();

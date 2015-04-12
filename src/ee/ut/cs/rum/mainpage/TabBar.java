@@ -4,45 +4,63 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+
 
 @SuppressWarnings("serial")
 public class TabBar extends VerticalLayout {
-	private Label label;
-	private VerticalLayout mainLayout;
-	private VerticalLayout buttonLayout;
-	private VerticalLayout tabLayout;
+	private Label title;
+	private VerticalLayout buttonsSection;
+	private VerticalLayout tabsSection;
 	private Button currentlyPressed;
 	
 	public TabBar() {
 		
-		label= new Label();
+		title= new Label();
+		this.addComponent(title);
+		
+		buttonsSection = new VerticalLayout ();
+		this.addComponent(buttonsSection);
+		
+		Label label = new Label("Opened tabs:");
 		this.addComponent(label);
 		
-		buttonLayout = new VerticalLayout ();
-		this.addComponent(buttonLayout);
-		
-		tabLayout = new VerticalLayout ();
-		this.addComponent(tabLayout);
+		tabsSection = new VerticalLayout ();
+		tabsSection.setImmediate(true);
+		this.addComponent(tabsSection);
 		
 		this.setSizeUndefined();
 	}
 	
 	public void setCaption(String caption) {
-		this.label.setCaption(caption);
+		this.title.setCaption(caption);
 	}
 	
 	public void addButton(Button button) {
-		buttonLayout.addComponent(button);
+		buttonsSection.addComponent(button);
 	}
 	
 	public void addTab(Button button) {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.addComponent(button);
-		layout.setComponentAlignment(button, Alignment.MIDDLE_RIGHT);
+		HorizontalLayout tabLayout = new HorizontalLayout();
+		tabLayout.addComponent(button);
+		button.addClickListener(new Button.ClickListener() {
+		    public void buttonClick(ClickEvent event) {
+		    	currentlyPressed.setEnabled(true);
+		    	event.getButton().setEnabled(false);
+		    	currentlyPressed = event.getButton();
+		    }
+		});
+		tabLayout.setComponentAlignment(button, Alignment.MIDDLE_RIGHT);
+		
 		Button closeTabButton = new Button("X");
-		layout.addComponent(closeTabButton);
+		closeTabButton.addClickListener(new Button.ClickListener() {
+		    public void buttonClick(ClickEvent event) {
+		    	tabsSection.removeComponent(event.getButton().getParent());
+		    }
+		});
+		tabLayout.addComponent(closeTabButton);
+		tabsSection.addComponent(tabLayout);
 	}
 	
 	public Button getCurrentlyPressed() {
