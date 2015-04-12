@@ -37,7 +37,6 @@ public class CreateAccount extends Panel implements View {
 
 	public CreateAccount() {
 		accountItem = new BeanItem<Account>(new Account());
-
 		currentUI = ((RumUI) UI.getCurrent());
 
 		GridLayout layout = new GridLayout(1, 6);
@@ -114,11 +113,13 @@ public class CreateAccount extends Panel implements View {
 					binder.commit();
 					currentUI.getAccounts().addEntity(accountItem.getBean());
 					accountItem = new BeanItem<Account>(new Account());
-					accName.clear();
-					accEmail.clear();
-					accPassword.clear();
+					binder.clear();
 					rePassword.clear();
-					Notification.show("Account ALMOST created!",  Notification.Type.HUMANIZED_MESSAGE);
+					accName.setValidationVisible(false);
+					accEmail.setValidationVisible(false);
+					accPassword.setValidationVisible(false);
+					rePassword.setValidationVisible(false);
+					Notification.show("Account created!",  Notification.Type.HUMANIZED_MESSAGE);
 				} catch (CommitException e) {
 					Notification.show("Account details contain errors", "Click to dismiss", Notification.Type.ERROR_MESSAGE);
 					e.printStackTrace();

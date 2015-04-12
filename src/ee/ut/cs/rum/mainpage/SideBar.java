@@ -117,10 +117,10 @@ public class SideBar extends Panel {
 	}
 
 	public void setLoggedInRole(String role) {
-		if (role == "ADMINISTRATOR" || role == "USER") {
-			this.setVisible(true);
-		} else {
+		if (role == null) {
 			this.setVisible(false);
+		} else if (role.equals("ADMINISTRATOR") || role.equals("USER")) {
+			this.setVisible(true);
 		}
 	}
 	

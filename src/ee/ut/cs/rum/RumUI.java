@@ -1,5 +1,10 @@
 package ee.ut.cs.rum;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 import javax.servlet.annotation.WebServlet;
 
 import org.hibernate.SessionFactory;
@@ -35,13 +40,14 @@ public class RumUI extends UI {
 
 	public static final String PERSISTENCE_UNIT = "RuM";
 
+	private EntityManager entityManager;
 	private JPAContainer<Account> accounts;
 
 	private MainLayout mainLayout;
 	private Header header;
 	private SideBar sideBar;
 	private RumNavigator rumNavigator;
-	private String currentUser; //TODO proper user handling
+	private Account currentUser; //TODO proper user handling
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -60,7 +66,8 @@ public class RumUI extends UI {
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 		SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
-		accounts = JPAContainerFactory.make(Account.class, RumUI.PERSISTENCE_UNIT);
+		entityManager = JPAContainerFactory.createEntityManagerForPersistenceUnit(RumUI.PERSISTENCE_UNIT);
+		accounts = JPAContainerFactory.make(Account.class, entityManager);
 
 		mainLayout = new MainLayout();
 		rumNavigator = new RumNavigator(this, mainLayout.getContent());
@@ -84,22 +91,26 @@ public class RumUI extends UI {
 		return rumNavigator;
 	}
 
-	public String getCurrentUser() {
+	public Account getCurrentUser() {
 		return currentUser;
+	}
+	
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 	public JPAContainer<Account> getAccounts() {
 		return accounts;
 	}
 
-	public void setCurrentUser(String currentUser) {
+	public void setCurrentUser(Account currentUser) {
 		this.currentUser = currentUser;
-		if (currentUser == "ADMINISTRATOR" || currentUser == "USER") {
-			getSideBar().setLoggedInRole(currentUser);
-			getHeader().setLoggedIn(true);
-		} else {
+		if (currentUser == null) {
 			getSideBar().setLoggedInRole(null);
 			getHeader().setLoggedIn(false);
+		} else if (currentUser.getRole().equals("ADMINISTRATOR") || currentUser.getRole().equals("USER")) {
+			getSideBar().setLoggedInRole(currentUser.getRole());
+			getHeader().setLoggedIn(true);
 		}
 	}
 }
