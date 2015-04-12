@@ -41,6 +41,10 @@ public class Account implements Serializable {
 	@NotNull
     @Column(name = "role")
 	private String role;
+	
+	@NotNull
+    @Column(name = "is_disabled", columnDefinition = "boolean default false")
+	private Boolean isDisabled;
     
     public Account() {
 	}
@@ -83,6 +87,14 @@ public class Account implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public Boolean getIsDisabled() {
+		return isDisabled;
+	}
+	
+	public void setIsDisabled(Boolean isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 	
 	@Override

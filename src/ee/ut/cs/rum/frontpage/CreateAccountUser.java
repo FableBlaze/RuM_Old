@@ -110,6 +110,7 @@ public class CreateAccountUser extends Panel implements View {
 
 				try {
 					accountItem.getBean().setRole("ADMINISTRATOR");
+					accountItem.getBean().setIsDisabled(false);
 					binder.commit();
 					currentUI.getAccounts().addEntity(accountItem.getBean());
 					accountItem = new BeanItem<Account>(new Account());
