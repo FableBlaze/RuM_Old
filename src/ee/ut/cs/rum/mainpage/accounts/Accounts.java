@@ -3,8 +3,8 @@ package ee.ut.cs.rum.mainpage.accounts;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -20,9 +20,12 @@ public class Accounts extends Panel implements View {
 	public Accounts() {
 		currentUI = ((RumUI) UI.getCurrent());
 		
-		Label aboutText = new Label("Administer all ze accounts.... so much accounts");
-		aboutText.setSizeUndefined();
-		this.setContent(aboutText);
+		Table accTable = new Table(null, currentUI.getAccounts());
+		accTable.setVisibleColumns(new Object[] {"id","name","email","role"});
+		accTable.setSelectable(true);
+		accTable.setImmediate(true);
+		accTable.setSizeFull();
+		this.setContent(accTable);
 		
 		createEnterButton("Accounts");
 	}

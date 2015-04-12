@@ -1,10 +1,6 @@
 package ee.ut.cs.rum;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
 import javax.servlet.annotation.WebServlet;
 
 import org.hibernate.SessionFactory;

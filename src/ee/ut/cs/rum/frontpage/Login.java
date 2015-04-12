@@ -6,8 +6,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
@@ -86,6 +84,8 @@ public class Login extends Panel implements View {
 			    	} else {
 			    		getUI().getNavigator().navigateTo(fragmentAndParameters);
 					}
+					loginUsername.clear();
+					loginPassword.clear();
 				} catch (NoResultException e) {
 					Notification.show("Wrong username or password", "Click to dismiss", Notification.Type.ERROR_MESSAGE);
 				}
@@ -118,8 +118,6 @@ public class Login extends Panel implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		loginUsername.clear();
-		loginPassword.clear();
 		enterButton.setEnabled(false);
 		currentUI.getHeader().setCurrentlyPressed(enterButton);
 	}
