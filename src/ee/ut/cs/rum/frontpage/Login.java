@@ -69,10 +69,12 @@ public class Login extends Panel implements View {
 				Root<Account> root = query.from(Account.class);
 				Path<String> name = root.get("name");
 				Path<String> password = root.get("password");
+				Path<String> isDisabled = root.get("isDisabled");
 				query.select((root)).where(
 					    criteriaBuilder.and(
 					        criteriaBuilder.equal(name, loginUsername.getValue()),
-					        criteriaBuilder.equal(password, loginPassword.getValue())
+					        criteriaBuilder.equal(password, loginPassword.getValue()),
+					        criteriaBuilder.equal(isDisabled, false)
 					    )
 					);
 				
