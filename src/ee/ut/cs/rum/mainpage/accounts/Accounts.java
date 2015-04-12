@@ -11,6 +11,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 
 import ee.ut.cs.rum.RumUI;
+import ee.ut.cs.rum.mainpage.SideBar;
 import ee.ut.cs.rum.mainpage.TabBar;
 
 @SuppressWarnings("serial")
@@ -20,12 +21,13 @@ public class Accounts extends GridLayout implements ComponentContainer, View {
 	private RumUI currentUI;
 	private Button sideBarEnterButton;
 	private Button tabBarEnterButton;
-	private Button createAddAccountButton;
+	private Button addAccountButton;
 	private TabBar tabBar;
 	private Panel contentPanel;
 	private AccountsTable accountsTable;
 	private CreateAccountAdmin createAccountAdmin;
 	private String currentContent;
+	
 	
 	public Accounts() {
 		currentUI = ((RumUI) UI.getCurrent());
@@ -53,16 +55,14 @@ public class Accounts extends GridLayout implements ComponentContainer, View {
 		tabBar.setCaption("Accounts sub-sections:");
 		tabBarEnterButton = createTabBarEnterButton("Accounts");
 		tabBar.addButton(tabBarEnterButton);
-		createAddAccountButton = createAddAccountButton();
-		tabBar.addButton(createAddAccountButton);
+		addAccountButton = createAddAccountButton();
+		tabBar.addButton(addAccountButton);
 	}
 	
 	private Button createAddAccountButton() {
 		Button addAccButton = new Button("Add account");
 		addAccButton.addClickListener(new Button.ClickListener() {
 		    public void buttonClick(ClickEvent event) {
-		    	tabBar.getCurrentlyPressed().setEnabled(true);
-		    	event.getButton().setEnabled(false);
 		    	tabBar.setCurrentlyPressed(event.getButton());
 		    	currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+CreateAccountAdmin.NAME);
 		    }
@@ -79,8 +79,6 @@ public class Accounts extends GridLayout implements ComponentContainer, View {
 		    	currentUI.getRumNavigator().navigateTo(Accounts.NAME);
 		    	currentContent = null;
 				contentPanel.setContent(accountsTable);
-				tabBar.getCurrentlyPressed().setEnabled(true);
-		    	event.getButton().setEnabled(false);
 		    	tabBar.setCurrentlyPressed(event.getButton());
 		    }
 		});
@@ -108,17 +106,34 @@ public class Accounts extends GridLayout implements ComponentContainer, View {
 		currentUI.getHeader().setMainPanelButtonPressed();
 		currentUI.getSideBar().setCurrentlyPressed(sideBarEnterButton);
 		currentUI.getSideBar().setCurrentView(Accounts.NAME);
-
-		if (event.getParameters().isEmpty()) {
+		String parameters = event.getParameters();
+		if (parameters.isEmpty()) {
 			if (currentContent == null) {
 				contentPanel.setContent(accountsTable);
-				tabBarEnterButton.setEnabled(false);
 				tabBar.setCurrentlyPressed(tabBarEnterButton);
 			}
-		} else if (event.getParameters().equals(CreateAccountAdmin.NAME)) {
-			currentContent = CreateAccountAdmin.NAME;
+		} else if (parameters.equals(CreateAccountAdmin.NAME)) {
+			currentContent = event.getParameters();
 			contentPanel.setContent(createAccountAdmin);
-			tabBar.setCurrentlyPressed(createAddAccountButton);
+			tabBar.setCurrentlyPressed(addAccountButton);
+		} else if (parameters.startsWith(AccountDetails.NAME)) {
+			if (!tabBar.getCurrentTabs().contains(parameters)) {
+				currentContent = parameters;
+				AccountDetails accountDetails = new AccountDetails(event.getParameters());
+				Button enterButton = new Button(event.getParameters());
+				enterButton.setImmediate(true);
+				enterButton.addClickListener(new Button.ClickListener() {
+				    public void buttonClick(ClickEvent event) {
+				    	currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+parameters);
+				    	contentPanel.setContent(accountDetails);
+				    	tabBar.setCurrentlyPressed(enterButton);
+				    }
+				});
+				tabBar.addTab(enterButton, tabBarEnterButton, parameters);
+				currentUI.getRumNavigator().navigateTo(Accounts.NAME+"/"+parameters);
+		    	contentPanel.setContent(accountDetails);
+		    	tabBar.setCurrentlyPressed(enterButton);
+			}
 		}
 	}
 }

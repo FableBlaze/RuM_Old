@@ -1,5 +1,7 @@
 package ee.ut.cs.rum.mainpage;
 
+import java.util.ArrayList;
+
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -14,8 +16,12 @@ public class TabBar extends VerticalLayout {
 	private VerticalLayout buttonsSection;
 	private VerticalLayout tabsSection;
 	private Button currentlyPressed;
+
+	private ArrayList<String> currentTabs;
 	
 	public TabBar() {
+		
+		currentTabs=new ArrayList<String>();
 		
 		title= new Label();
 		this.addComponent(title);
@@ -41,14 +47,13 @@ public class TabBar extends VerticalLayout {
 		buttonsSection.addComponent(button);
 	}
 	
-	public void addTab(Button button) {
+	
+	public void addTab(Button button, Button tabBarEnterButton, String tabId) {
 		HorizontalLayout tabLayout = new HorizontalLayout();
 		tabLayout.addComponent(button);
 		button.addClickListener(new Button.ClickListener() {
 		    public void buttonClick(ClickEvent event) {
-		    	currentlyPressed.setEnabled(true);
-		    	event.getButton().setEnabled(false);
-		    	currentlyPressed = event.getButton();
+		    	setCurrentlyPressed(event.getButton());
 		    }
 		});
 		tabLayout.setComponentAlignment(button, Alignment.MIDDLE_RIGHT);
@@ -57,10 +62,15 @@ public class TabBar extends VerticalLayout {
 		closeTabButton.addClickListener(new Button.ClickListener() {
 		    public void buttonClick(ClickEvent event) {
 		    	tabsSection.removeComponent(event.getButton().getParent());
+		    	currentTabs.remove(tabId);
+		    	if (currentlyPressed == button) {
+		    		tabBarEnterButton.click();
+				}
 		    }
 		});
 		tabLayout.addComponent(closeTabButton);
 		tabsSection.addComponent(tabLayout);
+		currentTabs.add(tabId);
 	}
 	
 	public Button getCurrentlyPressed() {
@@ -68,6 +78,14 @@ public class TabBar extends VerticalLayout {
 	}
 	
 	public void setCurrentlyPressed(Button currentlyPressed) {
+		if (this.currentlyPressed != null) {
+			this.currentlyPressed.setEnabled(true);
+		}
 		this.currentlyPressed = currentlyPressed;
+		currentlyPressed.setEnabled(false);
+	}
+	
+	public ArrayList<String> getCurrentTabs() {
+		return currentTabs;
 	}
 }

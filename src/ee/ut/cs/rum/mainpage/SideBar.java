@@ -6,6 +6,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
+
 import ee.ut.cs.rum.RumUI;
 import ee.ut.cs.rum.mainpage.workspace.TasksUser;
 

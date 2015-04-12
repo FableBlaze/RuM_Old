@@ -7,9 +7,9 @@ import com.vaadin.ui.Label;
 public class AccountDetails extends GridLayout {
 	public static final String NAME = "accountDetails";
 	
-	public AccountDetails() {
+	public AccountDetails(String id) {
 		super(1,7);
-		Label title = new Label("View of teh account details");
+		Label title = new Label("View of teh account details: "+ id);
 		this.addComponent(title, 0, 0);
 		this.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
 	}
