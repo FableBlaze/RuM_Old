@@ -1,7 +1,7 @@
-# RuM
+# RuM (abandoned)
 RuM - Rule Mining platform
 
-Currently in early development.
+**NB! No further development will be done in this repo. Repo kept only for history purposes.**
 
 
 Main goals of the platform:
