@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="RuM">
+    <wb-module deploy-name="RuM_Old">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="RuM"/>
-        <property name="java-output-path" value="/RuM/build/classes"/>
+        <property name="java-output-path" value="/RuM_Old/build/classes"/>
+        <property name="context-root" value="RuM_Old"/>
     </wb-module>
 </project-modules>
